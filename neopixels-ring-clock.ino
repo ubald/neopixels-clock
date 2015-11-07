@@ -75,5 +75,4 @@ void loop() {
   }
   // Output
   strip.show();
-  delay(1000/60);
 }
