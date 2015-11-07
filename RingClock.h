@@ -8,7 +8,7 @@
 class RingClock {
 	public:
 		RingClock(
-			unsigned long leds[], 
+			unsigned long leds[][3], 
 			unsigned int ledCount, 
 			unsigned int displayedHours, 
 			PatternCreator patterns[], 
@@ -17,7 +17,7 @@ class RingClock {
 		~RingClock();
 		void init();
 		void tick( unsigned long timestamp );
-		unsigned long * leds;
+		unsigned long (*leds)[3];
 		unsigned int ledCount;
 		unsigned int displayedHours;
 		unsigned int ledsPerHour;
@@ -25,10 +25,11 @@ class RingClock {
 		time_t last;
 
 	private:
+		void selectRandomPattern();
 		unsigned int patternCount;
 		PatternCreator * patternCreators;
 		ClockPattern * currentPattern;
-		bool ready = false;
+		bool firstRun = true;
 };
 
 #endif

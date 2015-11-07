@@ -7,6 +7,7 @@
 template< typename T > ClockPattern * createPattern(const RingClock * clock) {
     return new T(clock);
 }
+
 typedef ClockPattern * (*PatternCreator)(const RingClock * clock);
 
 #endif

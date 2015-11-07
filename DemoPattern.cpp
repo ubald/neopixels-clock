@@ -8,54 +8,29 @@ void DemoPattern::init() {
 void DemoPattern::tick() {
 	ClockPattern::tick();
 
-	if ( clock->now.hours != clock->last.hours ) {
-      patternState = HOUR_CHANGE;
+	// Detect the changes we are interested in reacting to
+	if ( clock->now.hours12 != clock->last.hours12 ) {
+      patternState = DemoPattern::HOUR_CHANGE;
     } else if ( clock->now.minutes != clock->last.minutes ) {
-      patternState = MINUTE_CHANGE;
+      patternState = DemoPattern::MINUTE_CHANGE;
     }
-
-
-Serial.println(clock->now.seconds);
-
+loopyLoop();
+return;
+    // Pseudo state machine
     switch ( patternState ) {
-	    case LOOP:
-	    Serial.println("A");
-	      doPatternLoop( );
+	    case DemoPattern::LOOP:
+	      loopyLoop( );
 	      break;
-	    case MINUTE_CHANGE:
-	    Serial.println("B");
-	      doPatternMinuteChange( );
+	    case DemoPattern::MINUTE_CHANGE:
+	      minuteChange( );
 	      break;
-	    case HOUR_CHANGE:
-	    Serial.println("C");
-	      doPatternHourChange( );
+	    case DemoPattern::HOUR_CHANGE:
+	      hourChange( );
 	      break;
   }
-
-	
 }
 
-void DemoPattern::doPatternLoop_test( ) {
-
-  Serial.print(clock->now.percentClock);
-  Serial.print(' ');
-  Serial.print(clock->now.percentHour);
-  Serial.print(' ');
-  Serial.print(clock->now.percentMinute);
-  Serial.print(' ');
-  Serial.print(clock->now.percentSecond);
-  Serial.println(' ');
-
-	for ( unsigned int i = 0; i< clock->ledCount; i++) {
-		clock->leds[i] = Color::fromRGB(
-			i <= clock->now.percentHour * clock->ledCount ? 255 : 0, 
-			i == clock->now.hours * HOURS_ON_CLOCK ? 127 : 0, 
-			i > clock->now.percentHour * clock->ledCount ? clock->now.percentHour * 255 : 0
-		);
-	}
-}
-
-void DemoPattern::doPatternLoop() {
+void DemoPattern::loopyLoop() {
 
   unsigned int tail = ((clock->now.percentSecond * clock->ledCount) + (clock->now.percentMinute * clock->ledCount));
   unsigned int tail1 = tail % clock->ledCount;
@@ -73,9 +48,6 @@ void DemoPattern::doPatternLoop() {
   unsigned int post_minute1 = (minutePosition + 1) % clock->ledCount;
 
   unsigned int glow = 255 * ( 1. - pow(clock->now.percentSecond, 0.25) );
-
-Serial.println(clock->now.percentClock);
-
 
   for ( unsigned int i = 0; i < clock->ledCount; i++ ) {
     // Bounds loop around edges, so check individually
@@ -123,46 +95,18 @@ Serial.println(clock->now.percentClock);
 		b += 255;
 	}
 
-	clock->leds[i] = Color::fromRGB( min(r, 255), min(g, 255), min(b, 255) );
+	//clock->leds[i] = Color::fromRGB( min(r, 255), min(g, 255), min(b, 255) );
+	clock->leds[i][0] += r;
+	clock->leds[i][1] += g;
+	clock->leds[i][2] += b;
 
-    /*byte hourValue = 0;
-	if ( i == hourPosition ) {
-		hourValue = 255;
-	} else if ( i == pre_hour1 || i == post_hour1 ) {
-		hourValue = 64;
-	} else if ( i == pre_hour2 || i == post_hour2 ) {
-		hourValue = 16;
-	}
-
-	byte minuteValue = 65;
-	if ( i == minutePosition ) {
-		minuteValue = 255;
-	} else if ( i == pre_minute1 || i == post_minute1 ) {
-		minuteValue = 32;
-	}
-
-	byte tailValue = 0;
-	if ( i == tail1 ) {
-		tailValue = 32;
-	} else if ( i == tail2 ) {
-		tailValue = 16;
-	} else if ( i == tail3 ) {
-		tailValue = 8;
-	}
-
-	color = Color::fromRGB( isHour ? hourValue : ( isSecond ? glow : 0 ), isMinute ? minuteValue : ( isSecond ? glow : 0 ), isSecond ? 255 : tailValue );
-    */
-	//clock->leds[i] = color;
   }
 }
 
-void DemoPattern::doPatternMinuteChange() {
-  /*colorWipe(Color(255, 0, 0), 50);
-  colorWipe(Color(0, 255, 0), 50);
-  colorWipe(Color(0, 0, 255), 50);*/
-  patternState = LOOP;
+void DemoPattern::minuteChange() {
+  patternState = DemoPattern::LOOP;
 }
 
-void DemoPattern::doPatternHourChange() {
-  patternState = LOOP;
+void DemoPattern::hourChange() {
+  patternState = DemoPattern::LOOP;
 }

@@ -4,18 +4,19 @@
 #include "ClockPattern.h"
 #include "RingClock.h"
 
-enum PatternState { LOOP, MINUTE_CHANGE, HOUR_CHANGE };
+
 
 class DemoPattern : public ClockPattern {
 	using ClockPattern::ClockPattern;
 	public:
 		void init() override;
 		void tick() override;
+		enum PatternState { LOOP, MINUTE_CHANGE, HOUR_CHANGE };
+
 	private:
-		void doPatternLoop_test( );
-		void doPatternLoop();
-		void doPatternMinuteChange();
-		void doPatternHourChange();
+		void loopyLoop();
+		void minuteChange();
+		void hourChange();
 		PatternState patternState = LOOP;
 };
 
