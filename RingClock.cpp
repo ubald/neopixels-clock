@@ -1,5 +1,5 @@
 #include "RingClock.h"
-#include "Arduino.h";
+#include "Arduino.h"
 
 RingClock::RingClock(
   unsigned long leds[][3], 
@@ -8,17 +8,13 @@ RingClock::RingClock(
   PatternCreator patternCreators[], 
   unsigned int patternCount 
 ) :
-  leds{leds},
-  ledCount{ledCount},
+    leds{leds},
+    ledCount{ledCount},
   displayedHours{displayedHours},
   ledsPerHour{ledCount/displayedHours},
   patternCreators{patternCreators},
-  patternCount{patternCount}
+  patternCount{patternCount}  
 {}
-
-RingClock::~RingClock() {
-  delete currentPattern;
-}
 
 void RingClock::init() {
   selectRandomPattern();
@@ -66,16 +62,13 @@ void RingClock::tick(unsigned long timestamp) {
   }
 
   // Update the current clock pattern
-  currentPattern->tick();
+  currentPattern.tick();
 
   // Save last time to detect changes in the pattern classes
   last = now;
 }
 
 void RingClock::selectRandomPattern() {
-  if ( currentPattern ) {
-    delete currentPattern;
-  }
   currentPattern = patternCreators[random(patternCount)](this);
-  currentPattern->init();
+  currentPattern.init();
 }

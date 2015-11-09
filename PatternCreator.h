@@ -2,12 +2,12 @@
 #define PATTERN_CREATOR_H
 
 #include "RingClock.h"
-#include "ClockPattern.h";
+#include "ClockPattern.h"
 
-template< typename T > ClockPattern * createPattern(const RingClock * clock) {
-    return new T(clock);
+template< typename T > ClockPattern createPattern(RingClock * clock) {
+    return T(clock);
 }
 
-typedef ClockPattern * (*PatternCreator)(const RingClock * clock);
+typedef ClockPattern (*PatternCreator)(RingClock * clock);
 
 #endif

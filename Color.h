@@ -1,7 +1,7 @@
 #ifndef COLORS_H
 #define COLORS_H
 
-#include <stdint.h>;
+#include <stdint.h>
 
 class Color {
 
