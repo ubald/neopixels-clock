@@ -14,21 +14,20 @@ class RingClock {
 			PatternCreator patterns[], 
 			unsigned int patternCount
 		);
-		~RingClock();
 		void init();
-		void tick( unsigned long timestamp );
+		void tick( unsigned long timestamp);
 		unsigned long (*leds)[3];
 		unsigned int ledCount;
 		unsigned int displayedHours;
 		unsigned int ledsPerHour;
-		time_t now;
+                time_t now;
 		time_t last;
 
 	private:
 		void selectRandomPattern();
 		unsigned int patternCount;
 		PatternCreator * patternCreators;
-		ClockPattern * currentPattern;
+                ClockPattern currentPattern{nullptr};
 		bool firstRun = true;
 };
 

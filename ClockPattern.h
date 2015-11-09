@@ -8,11 +8,11 @@ class RingClock;
 
 class ClockPattern {
 	public:
-		ClockPattern(const RingClock * clock);
+		ClockPattern(RingClock * clock);
 		virtual void init();
 		virtual void tick();
 	protected:
-		const RingClock * clock;
+		RingClock * clock;
 };
 
 #endif

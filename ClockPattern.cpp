@@ -1,7 +1,7 @@
 #include "ClockPattern.h"
 #include "RingClock.h"
 
-ClockPattern::ClockPattern(const RingClock * clock) : clock{clock} {}
+ClockPattern::ClockPattern(RingClock * clock) : clock{clock} {}
 
 void ClockPattern::init() {}
 
