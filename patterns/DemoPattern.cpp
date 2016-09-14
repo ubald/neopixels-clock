@@ -1,5 +1,5 @@
 #include "DemoPattern.h"
-#include "Arduino.h"
+#include "math.h"
 
 void DemoPattern::init() {
 	ClockPattern::init();

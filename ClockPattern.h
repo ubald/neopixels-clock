@@ -2,7 +2,6 @@
 #define CLOCK_PATTERN_H
 
 #include "Time.h"
-#include "Color.h"
 
 class RingClock;
 

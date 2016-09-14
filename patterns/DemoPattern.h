@@ -4,8 +4,6 @@
 #include "ClockPattern.h"
 #include "RingClock.h"
 
-
-
 class DemoPattern : public ClockPattern {
 	using ClockPattern::ClockPattern;
 	public:
