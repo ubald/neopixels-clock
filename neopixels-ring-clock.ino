@@ -1,12 +1,19 @@
+#include "Particle.h"
+#include "Time.h"
 #include "particle/neopixel.h"
 #include "RingClock.h"
 #include "patterns/DemoPattern.h"
 
 // NeoPixels Pin
 #define PIN D2
+
+// LED Ring Configuration
 #define LED_COUNT 60
+
+// Clock Configuration
 #define DISPLAYED_HOURS 12
 
+// Patterns Configuration
 #define PATTERN_COUNT 2
 PatternCreator patterns[PATTERN_COUNT] {
   createPattern<DemoPattern>,
@@ -31,7 +38,6 @@ void setup() {
   randomSeed(analogRead(A0));
 
   Time.zone(-5);
-  //Particle.syncTime() once per day
 
   // Initialize strip
   strip.begin();
@@ -42,6 +48,9 @@ void setup() {
   ringClock.init();
 }
 
+// Timekeeping
+int lastDay = 0;
+
 // Loop
 float framerate = 60.0;
 float interval = 1000.0 / framerate;
@@ -51,6 +60,13 @@ void loop() {
   unsigned long now = millis();
   if ( now - lastFrame >= interval ) {
     lastFrame = now;
+
+    // Check for new day, if the day changed, sync tiem with the cloud
+    int day = Time.day();
+    if ( day != lastDay ) {
+      Particle.syncTime();
+      lastDay = day;
+    }
 
     // Update values
     ringClock.tick( );
