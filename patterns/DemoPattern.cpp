@@ -34,17 +34,17 @@ void DemoPattern::loopyLoop() {
 
   unsigned int tail = ((clock->now.percentSecond * clock->ledCount) + (clock->now.percentMinute * clock->ledCount));
   unsigned int tail1 = tail % clock->ledCount;
-  unsigned int tail2 = (clock->ledCount + tail - 1) % clock->ledCount;
-  unsigned int tail3 = (clock->ledCount + tail - 2) % clock->ledCount;
+  unsigned int tail2 = (clock->ledCount + tail - 1) % clock->ledCount; // Make sur we don't modulo on negatives
+  unsigned int tail3 = (clock->ledCount + tail - 2) % clock->ledCount; // Make sur we don't modulo on negatives
 
   unsigned int hourPosition = (clock->now.percentClock * clock->ledCount);
-  unsigned int pre_hour1 = (clock->ledCount + hourPosition - 1) % clock->ledCount;
-  unsigned int pre_hour2 = (clock->ledCount + hourPosition - 2) % clock->ledCount;
+  unsigned int pre_hour1 = (clock->ledCount + hourPosition - 1) % clock->ledCount; // Make sur we don't modulo on negatives
+  unsigned int pre_hour2 = (clock->ledCount + hourPosition - 2) % clock->ledCount; // Make sur we don't modulo on negatives
   unsigned int post_hour1 = (hourPosition + 1) % clock->ledCount;
   unsigned int post_hour2 = (hourPosition + 2) % clock->ledCount;
 
   unsigned int minutePosition = (clock->now.percentHour * clock->ledCount);
-  unsigned int pre_minute1 = (clock->ledCount + minutePosition - 1) % clock->ledCount;
+  unsigned int pre_minute1 = (clock->ledCount + minutePosition - 1) % clock->ledCount; // Make sur we don't modulo on negatives
   unsigned int post_minute1 = (minutePosition + 1) % clock->ledCount;
 
   unsigned int glow = 255 * ( 1. - pow(clock->now.percentSecond, 0.25) );

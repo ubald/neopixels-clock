@@ -12,6 +12,9 @@ class ClockPattern {
 		virtual void tick();
 	protected:
 		const RingClock * clock;
+		float distance(float a, float b);
+		float fadeLin(float distance, float head, float tail);
+		float fadePow(float distance, float head, float tail, float p = .5);
 };
 
 #endif

@@ -10,17 +10,20 @@ const unsigned long HOURS_PER_DAY = 24;
 const unsigned long HOURS_ON_CLOCK = 12;
 
 struct clock_time_t {
-  unsigned long hours24;
-  unsigned long hours12;
-  unsigned long minutes;
-  unsigned long seconds;
-  unsigned long milliseconds;
 
-  float percentDay;
-  float percentClock;
-  float percentHour;
-  float percentMinute;
-  float percentSecond;
+    unsigned long timestamp;
+
+    unsigned long hours24;
+    unsigned long hours12;
+    unsigned long minutes;
+    unsigned long seconds;
+    unsigned long milliseconds;
+
+    float percentDay;
+    float percentClock;
+    float percentHour;
+    float percentMinute;
+    float percentSecond;
 };
 
 #endif

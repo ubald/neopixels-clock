@@ -1,7 +1,6 @@
 #ifndef RING_CLOCK_H
 #define RING_CLOCK_H
 
-#include "application.h"
 #include "Time.h"
 #include "ClockPattern.h"
 #include "PatternCreator.h"
@@ -11,13 +10,12 @@ class RingClock {
 		RingClock(
 			unsigned long leds[][3],
 			unsigned int ledCount,
-			unsigned int displayedHours,
-			PatternCreator patterns[],
-			unsigned int patternCount
+			unsigned int displayedHours
 		);
 		~RingClock();
 		void init();
-		void tick();
+		void tick(const clock_time_t time);
+		void setPattern(ClockPattern * pattern);
 		unsigned long (*leds)[3];
 		unsigned int ledCount;
 		unsigned int displayedHours;
@@ -30,14 +28,6 @@ class RingClock {
 		unsigned int patternCount;
 		PatternCreator * patternCreators;
 		ClockPattern * currentPattern;
-		bool initializing = true;
-		bool calculating = false;
-		bool ready = false;
 		bool firstRun = true;
-		int lastSecond = 0;
-		unsigned long lastMilliseconds = 0;
-		unsigned long  millisecondsOffset = 0;
-		float lostMillisecondsMultiplicator = 1.0;
 };
-
 #endif

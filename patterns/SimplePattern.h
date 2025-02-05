@@ -1,19 +1,18 @@
-#ifndef SPLASH_PATTERN_H
-#define SPLASH_PATTERN_H
+#ifndef SIMPLE_PATTERN_H
+#define SIMPLE_PATTERN_H
 
 #include "ClockPattern.h"
 #include "RingClock.h"
 
 /**
- * Splash Screen Pattern
+ * Simple Clock Pattern
  */
-class SplashPattern : public ClockPattern {
+class SimplePattern : public ClockPattern {
 	using ClockPattern::ClockPattern;
 	public:
 		void init() override;
 		void tick() override;
-  private:
-    int step = 0;
+	private:
 };
 
 #endif
